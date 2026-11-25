@@ -1,60 +1,44 @@
-# Dijkstra PyRat Player
+# PyRat player with Dijkstra's algorithm
 
-A PyRat game player implementation using Dijkstra's algorithm to find the shortest path to cheese in a maze.
+A player for the PyRat maze game that uses Dijkstra's algorithm to find the shortest path to the cheese, taking weighted cells (such as mud) into account.
 
-## Overview
+IMT Atlantique algorithms course project, fall 2024.
 
-This project implements a player for the PyRat game that uses Dijkstra's shortest path algorithm to navigate mazes and collect cheese. The algorithm efficiently handles weighted edges (such as mud cells) to find optimal paths.
+## Team and roles
 
-## Students
+- **Code**: Ethan Samson
+- **Documentation**: Mathéo Cail
+- **Unit tests**: Tom Jaroszek
 
-- **Code**: SAMSON Ethan
-- **Documentation**: CAIL Mathéo  
-- **Unit Tests**: JAROSZEK Tom
+## Approach
 
-## Features
+The team first wrote breadth-first search (FIFO queue) and depth-first search (LIFO stack) players, then focused on Dijkstra's algorithm, which finds the shortest path when moves have different costs, as with mud in the maze.
 
-- **Dijkstra's Algorithm**: Efficient shortest path computation using a min-heap priority queue
-- **Weighted Graph Support**: Handles maze terrain variations (walls, mud, regular cells)
-- **PyRat Integration**: Fully compatible with the PyRat game framework
+- **Preprocessing**: computes the shortest path from the starting position to the first cheese.
+- **Turn**: plays the next move of the precomputed path.
+- **Postprocessing**: cleans up after the game.
 
-## Algorithm Complexity
+The search uses a min-heap priority queue (`heapq`): time complexity O((V + E) log V), memory O(V), where V is the number of cells and E the number of connections between them.
 
-- **Time Complexity**: O((V + E) log V) where V is the number of vertices and E is the number of edges
-- **Space Complexity**: O(V) for storing visited nodes, distances, and parent pointers
+## Tests
 
-## How It Works
+The unit tests (`test_Dijkstra.ipynb`) check, on randomly generated mazes of different sizes and densities, that:
 
-1. **Preprocessing**: Computes the shortest path from the player's starting position to the first cheese
-2. **Turn**: Executes each step of the precomputed path
-3. **Postprocessing**: Cleanup after the game ends
+- the path starts and ends at the right cells;
+- each step moves to a neighbouring cell;
+- edge cases are handled, such as identical start and end cells.
+
+Inputs are assumed to be valid: the player does not check for malformed mazes or inconsistent game states.
 
 ## Files
 
-- `Dijkstra.py` - Main player implementation with the Dijkstra algorithm
-- `test_Dijkstra.ipynb` - Unit tests for the pathfinding algorithm
-- `visualize_Dijkstra.ipynb` - Visualization of the algorithm's execution
-- `README.md` - This documentation
+- `Dijkstra.py`: the player and the Dijkstra implementation
+- `test_Dijkstra.ipynb`: unit tests
+- `visualize_Dijkstra.ipynb`: visualisation of a game
 
-## Testing
+## Getting started
 
-The project includes comprehensive unit tests that verify:
-- Correct path start and end points
-- Valid neighbor transitions in the path
-- Edge cases with random mazes of varying configurations
-
-Run tests with:
-```bash
-jupyter notebook test_Dijkstra.ipynb
-```
-
-## Installation
-
-Ensure you have PyRat installed:
 ```bash
 pip install -r requirements.txt
+jupyter notebook test_Dijkstra.ipynb
 ```
-
-## License
-
-This is a school project for IMT (Institut Mines-Télécom).
